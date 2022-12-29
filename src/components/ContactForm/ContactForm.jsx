@@ -11,6 +11,10 @@ export class ContactForm extends Component {
         name: '',
         number: '',
     }
+    
+    static propTypes = {
+        onSubmit: propTypes.func.isRequired,
+    }
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -19,16 +23,15 @@ export class ContactForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const form = e.currentTarget;
         this.props.onSubmit(this.state);
-        form.reset();
+        this.setState({ name:'', number: ''})
     };
 
     render() {
         const { name, number } = this.state;
 
         return (
-            <div>
+            <>
                 <form className={css.form} onSubmit={this.handleSubmit}>
                 <label>Name</label>
                 <input 
@@ -58,11 +61,8 @@ export class ContactForm extends Component {
 
                 <button type="submit" className={css.contactBtn}>Add contact</button>
                 </form>
-            </div>
+            </>
         )
     }
 }
 
-ContactForm.propTypes = {
-    onSubmit: propTypes.func.isRequired,
-};
